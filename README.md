@@ -92,13 +92,11 @@ To ensure robust evaluation and to minimize overfitting, our gradient boosting m
 
 **K-Fold & Stratified K-Fold**:
 
-We predominantly use K-Fold cross-validation with 5 or 10 folds.
-
-In experiments where maintaining the distribution of the key categorical variable is crucial (e.g., race group or the combination of race and the event indicator), we apply StratifiedKFold. This ensures that each fold retains a similar distribution of the target or stratification variable, which is especially important for equitable performance across diverse patient groups.
+In experiments where maintaining the distribution of the key categorical variable is crucial (e.g., race group or the combination of race and the event indicator), I applied StratifiedKFold. This ensures that each fold retains a similar distribution of the target or stratification variable, which is especially important for equitable performance across diverse patient groups.
 
 **Stratification Variables**:
 
-When using stratified CV, we commonly stratify by the race group, or by a composite stratification (e.g., a combination of race and the event indicator), so that the folds reliably represent the diversity in the population.
+When using stratified CV, I commonly stratify by the race group, or by a composite stratification (e.g., a combination of race and the event indicator), so that the folds reliably represent the diversity in the population.
 
 ## Ensembling Technique
 The ensembling is performed in two phases:
