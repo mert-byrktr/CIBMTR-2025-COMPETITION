@@ -27,7 +27,7 @@ The preprocessing module is responsible for:
 The DataPreprocessor class takes the paths for training and test CSV files and reads them into Pandas DataFrames.
 
 **Identifying Features**:
-Designated a list of columns to remove (e.g., "ID", "efs", "efs_time", and target "y"). All other columns are treated as features. Within these features, the code identifies categorical variables by checking if the data type is "object" and stores the remaining as numerical features.
+Designated a list of columns to remove (e.g., "ID", "efs", "efs_time", and target "y"). All other columns are treated as features.
 
 **Handling Missing Values and Encoding**:
 Categorical features are filled with a placeholder (e.g., "NAN") and then factorized (i.e., label encoded) so that each unique category is mapped to an integer. Numerical features are converted to lower precision (float32 or int32) to improve memory usage.
@@ -41,8 +41,6 @@ Our repository includes the implementation and training of various models, each 
 
 **Gradient Boosting Models**:
 Models built with libraries like `XGBoost`, `CatBoost`, and `LightGBM` are trained using various target transformations such as quantile transformations, time-weighted risk functions, and survival-specific objectives (e.g., Cox and AFT losses). These transformations help in handling the censoring in time-to-event data.
-
-Below is an excerpt you can add to the README under the "Models and Transformations" section (or within a dedicated subsection for gradient boosting models) that specifically details the target transformations used for gradient boosting methods:
 
 ---
 
@@ -105,7 +103,4 @@ The ensembling is performed in two phases:
 Since the different models might be on different scales, each model’s out-of-fold predictions are converted into their rank order. This normalization by ranking makes the ensemble more robust to scaling differences across models.
 
 **Optuna-Based Weight/Selection Optimization**:
-In one approach, a simple Optuna objective function suggests integer weights (for three ensemble predictions) in a specified range (e.g., 1 to 10). The ensemble prediction is computed as a weighted sum (via a dot product) of these ranked predictions.
-
-In a more advanced implementation (encapsulated in the EnsembleOptimizer class), predictions are loaded from a diverse pool of models, including base models with fixed weights and additional models where inclusion is decided via Optuna's categorical suggestion (0 to drop, 1 to include). The objective function sums the rank-transformed predictions (multiplied by their corresponding weight or inclusion indicator) and then uses our custom scoring function (which computes the stratified C-index adjusted for variability across race groups) as the metric to maximize.
-
+The ensemble prediction is computed as a weighted sum (via a dot product) of the ranked predictions using optuna to maximize the competition metric.
